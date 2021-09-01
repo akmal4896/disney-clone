@@ -19,7 +19,7 @@ function App() {
 
         <Switch>
 
-        <Route path="/login">
+          <Route path="/login">
             <Login />
           </Route>
 
