@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useCustomSelector } from '../hooks/useCustomSelector';
+import { Link } from 'react-router-dom';
 
 function Movies() {
 
@@ -12,11 +13,14 @@ function Movies() {
 
             <Content>
                 { movies && 
-                    movies.map((movie, index) => (
-                        <Wrap key={movie.id}>
-                            <img src={movie.cardImg}/>
+                    movies.map((movie, index) => {
+                        console.log(movie);
+                        return <Wrap key={movie.id}>
+                            <Link to={`/detail/${movie.id}`}>
+                                <img src={movie.cardImg}/>
+                            </Link>
                         </Wrap>
-                    ))    
+                    })    
                 }
             </Content>
         </Container>
