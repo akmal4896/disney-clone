@@ -1,10 +1,31 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import ImgSlider from './ImgSlider'
 import Movies from './Movies'
 import Viewers from './Viewers'
+import db from '../firebase'
+import { useDispatch } from 'react-redux'
+import { setMovies } from '../features/movie/movieSlice'
 
 function Home() {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        let unsubscribe = db.collection("movies").onSnapshot((querySnapshot) => {
+            let tempMovies = querySnapshot.docs.map((doc) => {
+                return {id: doc.id, ...doc.data()}
+            })
+            dispatch(setMovies(tempMovies));
+        }, (error) => {
+            console.log(error)
+        });
+
+        return () => {
+            unsubscribe()
+            console.log("unmount home")
+        }
+    }, [])
+
     return (
         <Container>
             <ImgSlider />
